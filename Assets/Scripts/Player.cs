@@ -14,11 +14,13 @@ public class Player : MonoBehaviour
     private Cube mainCube;
     
     private bool isPointerDown;
+    private bool canMove;
     private Vector3 cubePos;
 
     private void Start()
     {
         SpawnCube();
+        canMove = true;
         
         //Add touch slider events:
         _touchSlider.OnPointerDownEvent += TouchSlider_OnPointerDown;
@@ -45,9 +47,10 @@ public class Player : MonoBehaviour
 
     private void TouchSlider_OnPointerUp()
     {
-        if (isPointerDown)
+        if (isPointerDown && canMove)
         {
             isPointerDown = false;
+            canMove = false;
             //Push the cube:
             mainCube.cubeRigidbody.AddForce(Vector3.forward* pushForce, ForceMode.Impulse);
             
@@ -60,6 +63,7 @@ public class Player : MonoBehaviour
     private void SpawnNewCube()
     {
         mainCube.isMainCube = false;
+        canMove = true;
         SpawnCube();
     }
 

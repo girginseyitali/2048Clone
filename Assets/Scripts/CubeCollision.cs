@@ -1,16 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class CubeCollision : MonoBehaviour
 {
     private Cube cube;
-
+    
+    
     private void Awake()
     {
         cube = GetComponent<Cube>();
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -52,6 +55,7 @@ public class CubeCollision : MonoBehaviour
                 }
                 
                 //todo: Explosion FX
+                CameraController.Instance.ApplyCameraShake(0.5f, 0.2f);
                 
                 //Destroy the two cubes:
                 CubeSpawner.Instance.DestroyCube(cube);
