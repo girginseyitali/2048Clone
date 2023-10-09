@@ -11,14 +11,14 @@ public class Player : MonoBehaviour
     [Space] 
     [SerializeField] private TouchSlider _touchSlider;
 
-    [SerializeField] private Cube mainCube;
+    private Cube mainCube;
     
     private bool isPointerDown;
     private Vector3 cubePos;
 
     private void Start()
     {
-        //todo: Spawn new cube
+        SpawnCube();
         
         //Add touch slider events:
         _touchSlider.OnPointerDownEvent += TouchSlider_OnPointerDown;
@@ -52,8 +52,15 @@ public class Player : MonoBehaviour
             mainCube.cubeRigidbody.AddForce(Vector3.forward* pushForce, ForceMode.Impulse);
             
             // todo: Spawn a new cube after 0.3 seconds:
+            Invoke(nameof(SpawnNewCube), 0.3f);    
             
         }
+    }
+
+    private void SpawnNewCube()
+    {
+        mainCube.isMainCube = false;
+        SpawnCube();
     }
 
     private void TouchSlider_OnPointerDown()
@@ -61,6 +68,13 @@ public class Player : MonoBehaviour
         isPointerDown = true;
     }
 
+    private void SpawnCube()
+    {
+        mainCube = CubeSpawner.Instance.SpawnRandom();
+        mainCube.isMainCube = true;
+        cubePos = mainCube.transform.position;
+    }
+    
     private void OnDestroy()
     {
         _touchSlider.OnPointerDownEvent -= TouchSlider_OnPointerDown;
