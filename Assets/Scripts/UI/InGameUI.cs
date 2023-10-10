@@ -6,17 +6,18 @@ using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
 {
-    public static event EventHandler OnPauseAction;
+    public static InGameUI Instance { get; private set; }
+    
+    public event EventHandler OnPauseAction;
+    public event EventHandler OnOptionsAction;
     [SerializeField] private Button pauseButton;
-
-    new public static void ResetStaticData()
-    {
-        OnPauseAction = null;
-    }
+    [SerializeField] private Button optionsButton;
     
     private void Awake()
     {
+        Instance = this;
         pauseButton.onClick.AddListener(PauseButton);
+        optionsButton.onClick.AddListener(OptionsButton);
         
         Show();
     }
@@ -24,6 +25,11 @@ public class InGameUI : MonoBehaviour
     private void PauseButton()
     {
         OnPauseAction?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OptionsButton()
+    {
+        OnOptionsAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void Show()

@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        InGameUI.OnPauseAction += InGameUI_OnPauseAction;
+        InGameUI.Instance.OnPauseAction += InGameUI_OnPauseAction;
     }
 
     private void InGameUI_OnPauseAction(object sender, EventArgs e)
