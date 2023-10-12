@@ -22,12 +22,18 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         _states = GameStates.InGame;
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         InGameUI.Instance.OnPauseAction += InGameUI_OnPauseAction;
+        RedZone.Instance.OnGameOver += RedZone_OnGameOver;
+        
+    }
+    
+    private void RedZone_OnGameOver(object sender, EventArgs e)
+    {
+        _states = GameStates.GameOver;
     }
 
     private void InGameUI_OnPauseAction(object sender, EventArgs e)
@@ -35,13 +41,16 @@ public class GameManager : MonoBehaviour
         TogglePauseGame();
     }
 
+    
     private void Update()
     {
         switch (_states)
         {
             case GameStates.InGame:
+                Time.timeScale = 1f;
                 break;
             case GameStates.GameOver:
+                Time.timeScale = 0f;
                 break;
         }
     }
