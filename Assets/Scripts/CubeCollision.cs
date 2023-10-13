@@ -56,7 +56,7 @@ public class CubeCollision : MonoBehaviour
                 
                 //todo: Collision FX
                 CameraController.Instance.ApplyCameraShake(0.5f, 0.2f);
-                //SoundManager.Instance.PlayCollisionSound(contactPoint);
+                SoundManager.Instance.PlayCollisionSound(contactPoint);
                 
                 //Destroy the two cubes:
                 CubeSpawner.Instance.DestroyCube(cube);

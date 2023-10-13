@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 
@@ -12,20 +13,33 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
     [SerializeField] private AudioRefsSO audioRefsSO;
 
-    private float _sfxVolume = 1f;
-    private float _musicVolume = 1f;
+    [SerializeField] private float _sfxVolume;
+    [SerializeField] private float _musicVolume;
+
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioMixerGroup sfxMixerGroup;
+    [SerializeField] private AudioMixerGroup musicMixerGroup;
 
     private void Awake()
     {
         Instance = this;
-
+        
         _sfxVolume = PlayerPrefs.GetFloat(PLAYERPREFS_SFX_VOLUME, 1f);
         _musicVolume = PlayerPrefs.GetFloat(PLAYERPREFS_MUSIC_VOLUME, 1f);
     }
 
+    private void Start()
+    {
+        sfxMixerGroup.audioMixer.SetFloat("SFXMix", Mathf.Log10(_sfxVolume)*20);
+        musicMixerGroup.audioMixer.SetFloat("MusicMix", Mathf.Log10(_musicVolume) * 20);
+    }
+
     private void PlaySound(AudioClip audioClip, Vector3 position, float volumeMultiplier = 1f)
     {
-        AudioSource.PlayClipAtPoint(audioClip, position, _sfxVolume * volumeMultiplier);
+        //AudioSource.PlayClipAtPoint(audioClip, position, _sfxVolume * volumeMultiplier);
+        sfxSource.clip = audioClip;
+        sfxSource.Play();
     }
 
     private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volume = 1f)
@@ -35,12 +49,13 @@ public class SoundManager : MonoBehaviour
 
     public void PlayCollisionSound(Vector3 position)
     {
-        PlaySound(audioRefsSO.collision, position);
+        PlaySound(audioRefsSO.collision, position, 2);
     }
 
     public void SetSfxVolume(float volume)
     {
         _sfxVolume = volume;
+        sfxMixerGroup.audioMixer.SetFloat("SFXMix", Mathf.Log10(_sfxVolume)*20);
         PlayerPrefs.SetFloat(PLAYERPREFS_SFX_VOLUME, _sfxVolume);
         PlayerPrefs.Save();
     }
@@ -53,6 +68,7 @@ public class SoundManager : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         _musicVolume = volume;
+        musicMixerGroup.audioMixer.SetFloat("MusicMix", Mathf.Log10(_musicVolume) * 20);
         PlayerPrefs.SetFloat(PLAYERPREFS_MUSIC_VOLUME, _musicVolume);
         PlayerPrefs.Save();
     }

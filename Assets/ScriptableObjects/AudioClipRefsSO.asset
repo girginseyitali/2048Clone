@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4691c95f26e66ea498fcc37d8e792706, type: 3}
   m_Name: AudioClipRefsSO
   m_EditorClassIdentifier: 
-  collision: []
+  collision:
+  - {fileID: 8300000, guid: 0bf8807ddb9632c4197c4e1351bccc56, type: 3}
+  - {fileID: 8300000, guid: 884b1af2fce8c4d479a294a987bbaccc, type: 3}
+  - {fileID: 8300000, guid: e5fd1b1b2e629ce4387003cb0ca10104, type: 3}
