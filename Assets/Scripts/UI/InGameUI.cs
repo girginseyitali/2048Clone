@@ -14,24 +14,29 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button optionsButton;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI newHighScoreLabel;
     
     private void Awake()
     {
         Instance = this;
         pauseButton.onClick.AddListener(PauseButton);
         optionsButton.onClick.AddListener(OptionsButton);
-        
         Show();
     }
 
     private void Start()
     {
+        newHighScoreLabel.gameObject.SetActive(false);
         ScoreManager.Instance.OnScoreChanged += ScoreManager_OnScoreChanged;
     }
 
     private void ScoreManager_OnScoreChanged(object sender, EventArgs e)
     {
         UpdateScore();
+        if (ScoreManager.Instance.GetScore() > ScoreManager.Instance.GetHighScore())
+        {
+            newHighScoreLabel.gameObject.SetActive(true);
+        }
     }
 
     private void PauseButton()

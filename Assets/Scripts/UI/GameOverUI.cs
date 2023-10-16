@@ -12,6 +12,7 @@ public class GameOverUI : MonoBehaviour
     public event EventHandler OnGameRestart;
     
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private Button restartButton;
 
     private void Awake()
@@ -29,6 +30,8 @@ public class GameOverUI : MonoBehaviour
     private void RedZone_OnGameOver(object sender, EventArgs e)
     {
         Show();
+        UpdateScoreText();
+        UpdateHighScoreText();
     }
 
     private void RestartButton()
@@ -46,5 +49,16 @@ public class GameOverUI : MonoBehaviour
     private void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    private void UpdateScoreText()
+    {
+        scoreText.text = $"Score: {ScoreManager.Instance.GetScore()}";
+    }
+
+    private void UpdateHighScoreText()
+    {
+        ScoreManager.Instance.SetHighScore(ScoreManager.Instance.GetScore());
+        highScoreText.text = $"HighScore: {ScoreManager.Instance.GetHighScore()}";
     }
 }
