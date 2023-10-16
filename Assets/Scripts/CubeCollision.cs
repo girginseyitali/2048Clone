@@ -9,7 +9,6 @@ public class CubeCollision : MonoBehaviour
 {
     private Cube cube;
     
-    
     private void Awake()
     {
         cube = GetComponent<Cube>();
@@ -58,6 +57,7 @@ public class CubeCollision : MonoBehaviour
                 CameraController.Instance.ApplyCameraShake(0.5f, 0.2f);
                 SoundManager.Instance.PlayCollisionSound(contactPoint);
                 
+                ScoreManager.Instance.AddScore(cube);
                 //Destroy the two cubes:
                 CubeSpawner.Instance.DestroyCube(cube);
                 CubeSpawner.Instance.DestroyCube(otherCube);
