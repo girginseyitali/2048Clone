@@ -21,46 +21,22 @@ public class ScoreManager : MonoBehaviour
     
     private int GetScoreFromCubeNumber(int cubeNumber)
     {
-        switch (cubeNumber)
+        return cubeNumber switch
         {
-            case 2:
-                return 50;
-                break;
-            case 4:
-                return 70;
-                break;
-            case 8:
-                return 100;
-                break;
-            case 16:
-                return 120;
-                break;
-            case 32:
-                return 140;
-                break;
-            case 64:
-                return 160;
-                break;
-            case 128:
-                return 180;
-                break;
-            case 256:
-                return 200;
-                break;
-            case 512:
-                return 220;
-                break;
-            case 1024:
-                return 240;
-                break;
-            case 2048:
-                return 260;
-                break;
-            case 4096:
-                return 280;
-                break;
-        }
-        return 0;
+            2 => 50,
+            4 => 70,
+            8 => 100,
+            16 => 120,
+            32 => 140,
+            64 => 160,
+            128 => 180,
+            256 => 200,
+            512 => 220,
+            1024 => 240,
+            2048 => 260,
+            4096 => 280,
+            _ => 0
+        };
     }
 
     public int GetScore()
