@@ -18,12 +18,7 @@ public class ScoreManager : MonoBehaviour
         highScore = GetHighScore();
         
     }
-
-    private void OnOnScoreChanged(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     private int GetScoreFromCubeNumber(int cubeNumber)
     {
         return cubeNumber switch
